@@ -8,6 +8,6 @@ def echo_flt(ea):
 
 
 def msg_flt(msgid):
-    rr = re.compile(r'^[a-z0-9A-Z]{8,20}$')
+    rr = re.compile(r'^[a-z0-9A-Z]{20}$')
     if rr.match(msgid):
         return True

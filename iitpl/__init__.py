@@ -154,7 +154,6 @@ def msg_qpage(msglst):
 
 
 @route('/<msghash:re:[^/]{20}>')
-@route('/<msghash:re:[^/]{8}>')
 def msg_page(msghash):
     return _msg('msg', msghash)
 
