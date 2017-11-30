@@ -1,0 +1,4 @@
+#!/bin/sh
+
+#cd /srv/app && python2.7 webfetch.py
+python2.7 webfetch.py

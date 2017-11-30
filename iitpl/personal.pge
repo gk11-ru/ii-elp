@@ -1,0 +1,49 @@
+%import api.sx as sx, api
+
+%r.page_title = u'Подписка на эхи'
+%include iitpl/01.tpl r=r
+
+  <body>
+<div class="row">
+    <div class="small-12 columns">
+        <a href="/" title="Стартовая страница" class="secondary button"><i class="fa fa-home"></i> Стартовая страница</a>
+    </div>
+</div>
+
+    <div class="row"><div class="small-6 columns">
+
+%if not r.kuk.myel:
+<span class="alert-box">Сейчас используется набор эх по-умолчанию</span>
+%else:
+<span class="alert-box secondary">Пустой список вернёт набор эх по-умолчанию</span>
+%end
+
+    <h3>Персональный список эх</h3>
+
+        <form method="post" action="/a/myel">
+    
+        <textarea name="myel" style="height:400px">{{api.user_echoes(r)}}</textarea>
+        
+        <input type="submit" class="button" value="Сохранить">
+        
+        </form>
+
+    </div><div class="small-6 columns">
+
+%lst = api.load_echo()[1:]
+
+<table>
+%for a,b,c in lst:
+<tr><td>{{a}}</td><td>{{b}}</td><td>{{c}}</td></tr>
+%end
+</table>
+    </div></div>
+
+
+    <script src="/s/js/vendor/jquery.js"></script>
+    <script src="/s/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+</body>
+</html>

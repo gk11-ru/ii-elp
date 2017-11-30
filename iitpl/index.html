@@ -1,0 +1,78 @@
+%import api, api.sx as sx
+
+%include iitpl/01.tpl r=r
+
+<body>
+
+<div class="row">
+    <div class="small-12 columns">
+    <a href="/" class="button alert">ii</small></a>
+        <div class="right">
+            <a href="#" class="secondary button" data-dropdown="drop"><i class="fa fa-book"></i></a> 
+            <ul id="drop" class="f-dropdown" data-dropdown-content> 
+%for ea,n in lst:
+                <li><a href="/{{ea}}">{{ea}} ({{len(n)}})</a></li>
+%end
+            </ul>
+            <a href="/h/personal" class="button" title="Подписка на нужные эхи"><i class="fa fa-fw fa-plane"></i></a> 
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+<div class="large-8 medium-9 small-12 columns">
+
+%obj = [api.get_msg(n[-1]) + {'msgid':n[-1], 'ea': ea, 'len': len(n)} for ea,n in lst if n]
+
+%for mo in sorted(obj,key=lambda a: a.date,reverse=True):
+%if sx.gts() - 259200 < mo.date:
+
+    <a style="margin-bottom: 2px" class="secondary button" href="/{{mo.ea}}"><strong>{{mo.ea}}</strong>
+    <i class="fa fa-envelope-o"></i>
+    {{mo.len}}</a>
+
+<div class="panel {{'callout' if not mo.repto else ''}}">
+<p><strong title="{{mo.addr}}">{{mo.msgfrom}}</strong> to {{mo.msgto}}
+@ <strong>{{mo.subj}}</strong> <nobr><i class="fa fa-clock-o"></i> {{sx.dateg(mo.date,'%d/%m %H:%M')}}</nobr></p>
+<p>{{! sx.rend(mo.msg) }}</p> <!-- api.cut_text(mo.msg,2000,20) -->
+<a class="right tiny radius secondary label" href="/{{mo.ea}}">читать эху {{mo.ea}}</a>
+</div>
+<br />
+%end
+%end
+
+</div>
+<div class="large-4 medium-3 small-12 columns">
+
+
+%for ea,n in lst:
+%mo = api.get_msg(n[-1]) if n else ''
+<h4><a href="/{{ea}}">{{ea}}</a> 
+%if mo:
+
+<i class="fa fa-envelope-o"></i>
+
+{{len(n)}}</h4>
+<p><strong title="{{mo.addr}}">{{mo.msgfrom}}</strong> to {{mo.msgto}}
+<nobr><i class="fa fa-clock-o"></i> {{sx.dateg(mo.date,'%d/%m %H:%M')}}</nobr>
+<a href="/{{ea}}">{{mo.subj}}</a>
+</p>
+%else:
+</h4>
+%end
+<hr />
+%end
+
+<a href="/reg" class="button success expand">Регистрация</a>
+<!-- <a href="http://" class="button success expand">О технологии ii</a> -->
+
+  </div></div>
+
+    <script src="/s/js/vendor/jquery.js"></script>
+    <script src="/s/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+</body>
+</html>
