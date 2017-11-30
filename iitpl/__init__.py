@@ -161,6 +161,6 @@ def msg_page(msghash):
 
 @route('/<msghash:re:[A-Za-z0-9]{6}>')
 def msg_page_short(msghash):
-    lst = os.listdir('msg')
+    lst = os.listdir('m')
     msglst = [x for x in lst if x.startswith(msghash)]
     return _msg('msg', '/'.join(msglst))
